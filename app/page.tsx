@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AlertCircle, FileText, Clock, Bell, TrendingUp, Plus, BarChart3, PieChart as PieChartIcon } from 'lucide-react'
+import { AlertCircle, FileText, Clock, Bell, TrendingUp, Plus, BarChart3, PieChart } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
 export default function Dashboard() {
@@ -164,7 +164,7 @@ export default function Dashboard() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <BarChartIcon className="w-5 h-5 text-blue-600" />
+                      <BarChart3 className="w-5 h-5 text-blue-600" />
                       Receita por Empresa
                     </CardTitle>
                     <CardDescription>
@@ -193,9 +193,9 @@ export default function Dashboard() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <PieChartIcon className="w-5 h-5 text-purple-600" />
-                    Distribuição de Status
-                  </CardTitle>
+                      <PieChart className="w-5 h-5 text-purple-600" />
+                      Distribuição de Status
+                    </CardTitle>
                   <CardDescription>
                     Contratos por status
                   </CardDescription>
