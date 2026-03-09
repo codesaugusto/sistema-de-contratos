@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AlertCircle, FileText, Clock, Bell, TrendingUp, Plus, BarChart3, PieChart } from 'lucide-react'
+import { AlertCircle, FileText, Clock, Bell, TrendingUp, Plus, BarChart3, PieChart as PieChartIcon } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
 export default function Dashboard() {
@@ -193,7 +193,7 @@ export default function Dashboard() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                      <PieChart className="w-5 h-5 text-purple-600" />
+                      <PieChartIcon className="w-5 h-5 text-purple-600" />
                       Distribuição de Status
                     </CardTitle>
                   <CardDescription>
