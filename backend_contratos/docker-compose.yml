@@ -1,0 +1,99 @@
+# ============================================================
+# Docker Compose — Sistema de Contratos
+#
+# Serviços:
+#   postgres  → banco de dados (PostgreSQL 18)
+#   app       → backend Spring Boot (porta 8080)
+#   frontend  → Next.js (porta 3000)
+#
+# Como usar:
+#   Subir tudo:           docker compose up -d
+#   Subir com rebuild:    docker compose up -d --build
+#   Ver logs:             docker compose logs -f
+#   Parar tudo:           docker compose down
+#   Parar + apagar dados: docker compose down -v
+# ============================================================
+
+services:
+
+  # ----------------------------------------------------------
+  # PostgreSQL 18
+  # ----------------------------------------------------------
+  postgres:
+    image: postgres:18-alpine
+    container_name: backend-contratos-postgres
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # ----------------------------------------------------------
+  # Backend Spring Boot
+  # ----------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: backend-contratos-app
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    environment:
+      # Dentro do Docker, o hostname do postgres é "postgres" (nome do serviço)
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    ports:
+      - "8080:8080"
+
+  # ----------------------------------------------------------
+  # Frontend Next.js
+  # ----------------------------------------------------------
+  frontend:
+    build:
+      context: ../v0-sistema-de-contratos
+      dockerfile: Dockerfile
+      args:
+        # NEXT_PUBLIC_API_URL é embutida no bundle JS em build-time.
+        # O browser (fora do Docker) acessa o backend pela porta exposta.
+        # Se for deploy num servidor, troque pelo IP/domínio real:
+        #   NEXT_PUBLIC_API_URL: http://meu-servidor.com:8080
+        NEXT_PUBLIC_API_URL: http://localhost:8080
+
+    container_name: sistema-contratos-frontend
+    restart: unless-stopped
+
+    depends_on:
+      - app
+
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

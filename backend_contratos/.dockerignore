@@ -1,0 +1,34 @@
+# Build output do Gradle
+build/
+.gradle/
+
+# Variáveis de ambiente locais
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Logs
+*.log
+
+# Docs / extras
+README.md
+HELP.md
+*.md
+

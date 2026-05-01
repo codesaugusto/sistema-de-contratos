@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer=com.malloc.backend_contratos.infrastructure.config.EnvLoader
+

@@ -1,0 +1,27 @@
+# Ignorar se o repositório for inicializado na raiz do monorepo
+
+# Segredos
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Build do backend (Spring Boot / Gradle)
+backend_contratos/build/
+backend_contratos/.gradle/
+
+# Build do frontend (Next.js)
+v0-sistema-de-contratos/node_modules/
+v0-sistema-de-contratos/.next/
+v0-sistema-de-contratos/out/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
